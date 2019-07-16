@@ -1,0 +1,19 @@
+package jonathan.fall.foodmed.Dashboard;
+
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+
+public class Dashboard extends AppCompatActivity {
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        /*
+         * A data table
+         * showing all past
+         * picture submissions
+         * of the user
+         * To be done later
+         */
+    }
+}

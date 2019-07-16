@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/PreviousBFinal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="86dp"
+        android:layout_marginTop="19dp"
+        android:text="@string/precedent"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:text="@string/precedent" />
+
+    <TextView
+        android:id="@+id/submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/PreviousBFinal"
+        android:layout_marginStart="-73dp"
+        android:layout_toEndOf="@+id/add_photo"
+        android:text="@string/submit"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/add_photo"
+        android:layout_width="65dp"
+        android:layout_height="53dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="45dp"
+        android:layout_marginTop="108dp"
+        android:contentDescription="@string/photo_library_image_description"
+        app:srcCompat="@drawable/ic_photo_library"
+        />
+
+    <ImageView
+        android:id="@+id/thumbnail"
+        android:layout_width="116dp"
+        android:layout_height="96dp"
+        android:layout_alignTop="@+id/add_photo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-26dp"
+        android:contentDescription="@string/thumbnail"
+        app:srcCompat="@drawable/ic_food" />
+
+    <ImageView
+        android:id="@+id/take_photo"
+        android:layout_width="63dp"
+        android:layout_height="55dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/add_photo"
+        android:layout_marginStart="45dp"
+        android:contentDescription="@string/photo_taking_image_description"
+        app:srcCompat="@drawable/ic_add_a_photo_24px" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="240dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/multitext_MEAL_hint"
+            android:inputType="textMultiLine" />
+    </LinearLayout>
+
+</RelativeLayout>

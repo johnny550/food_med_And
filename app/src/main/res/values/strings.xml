@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">FoodMed</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="post_meal_condition">Please specify how you felt after your previous meal by selecting one or more options below</string>
+    <string name="navigation_drawer_open">Open Navigation drawer</string>
+    <string name="navigation_drawer_close">Close Navigation drawer</string>
+    <string name="previous_meal_finished_quantity">How much of your previous meal did you finish?</string>
+    <string name="precedent">Prev</string>
+    <string name="next">Next</string>
+    <string name="appetite">Appetite</string>
+    <string name="condition">Condition</string>
+    <string name="meal_announcer">Please state the meal you are about to have</string>
+    <string name="photo_library_image_description">Adding a photo from your library</string>
+    <string name="photo_taking_image_description">Take a photo</string>
+    <string name="multitext_MEAL_hint">Anything about this meal</string>
+    <string name="submit">Submit</string>
+    <string name="thumbnail">Image thumbnail</string>
+    <string-array name="first_questions_block">
+        <item>Difficulties swallowing</item>
+        <item>Feeling of solid food stuck in my chest</item>
+        <item>Loose stools</item>
+        <item>Sudden bowel movement</item>
+        <item>Stomach heaviness</item>
+        <item>Lower abdomen bloating</item>
+        <item>Fatigue</item>
+        <item>Weakness</item>
+        <item>None of the above</item>
+    </string-array>
+    <string-array name="meal_propositions">
+        <item>Breakfast</item>
+        <item>Lunch</item>
+        <item>Dinner</item>
+        <item>Snack</item>
+    </string-array>
+</resources>
