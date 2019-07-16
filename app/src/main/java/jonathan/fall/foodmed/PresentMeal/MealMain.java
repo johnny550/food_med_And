@@ -57,12 +57,12 @@ public class MealMain extends Fragment {
 
 
     public void dispatchTakePictureIntent() {
-       /* No need to save the image
+       //No need to save the image
        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        }*/
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        }
+ /*       Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(Objects.requireNonNull(getActivity()).getPackageManager()) != null) {
             // Create the File where the photo should go
@@ -82,7 +82,7 @@ public class MealMain extends Fragment {
                // startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
             }
-        }
+        }*/
     }
 
     @Override
