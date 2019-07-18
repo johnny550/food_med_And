@@ -86,6 +86,13 @@ public class FragmentCharger extends AppCompatActivity implements NavigationView
                         .beginTransaction()
                         .replace(R.id.fragment_container, new MealQuantityVAS()).commit();
                 break;
+            case R.id.nav_dashboard:
+                //what to do when this item is clicked
+                //Opening fragment
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, new Dashboard()).commit();
+                break;
         }
 
         drawer.closeDrawer(GravityCompat.START);

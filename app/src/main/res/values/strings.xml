@@ -27,6 +27,11 @@
     <string name="multitext_MEAL_hint">Anything about this meal</string>
     <string name="submit">Submit</string>
     <string name="thumbnail">Image thumbnail</string>
+    <string name="addMeal">Add a meal</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="actions">Actions</string>
+    <string name="notifications">Notifications</string>
+    <string name="settings">Settings</string>
     <string-array name="first_questions_block">
         <item>Difficulties swallowing</item>
         <item>Feeling of solid food stuck in my chest</item>
