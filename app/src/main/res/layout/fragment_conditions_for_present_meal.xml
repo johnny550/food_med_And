@@ -14,8 +14,7 @@
         android:text="@string/precedent"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="20sp"
-        android:textStyle="bold"
-        android:visibility="invisible" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/Next"

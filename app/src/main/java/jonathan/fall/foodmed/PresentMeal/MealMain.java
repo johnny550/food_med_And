@@ -22,6 +22,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -33,10 +35,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Objects;
 
 import jonathan.fall.foodmed.Dashboard.Dashboard;
 import jonathan.fall.foodmed.R;
+
 
 import static android.app.Activity.RESULT_OK;
 
@@ -52,7 +56,6 @@ public class MealMain extends Fragment {
     private AlertDialog alert;
 
 
-    /**/
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -78,6 +81,7 @@ public class MealMain extends Fragment {
                 Objects.requireNonNull(getFragmentManager())
                         .beginTransaction()
                         .replace(R.id.fragment_container, new ConditionStatement())
+                        .addToBackStack(null)
                         .commit();
             }
         });
@@ -102,8 +106,7 @@ public class MealMain extends Fragment {
                                             .commit();
                                 }
                             }).show();
-                }
-                else{
+                } else {
                     new AlertDialog.Builder(getActivity())
                             .setIcon(android.R.drawable.ic_dialog_info)
                             .setTitle("Image upload")
@@ -178,6 +181,7 @@ public class MealMain extends Fragment {
             myThumbnail.setImageBitmap(imageBitmap);*/
             Bitmap myBitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
             myThumbnail.setImageBitmap(myBitmap);
+            submit.setVisibility(View.VISIBLE);
 
         }
     }
@@ -197,13 +201,15 @@ public class MealMain extends Fragment {
         @Override
         protected Void doInBackground(Void... params) {
             String realPath = photoFile.getAbsolutePath();
-           // String response;
+            String response;
+
             try {
-                //response = postImage(realPath);
+                //get the patient ID from the shared pref
+                response = postImage(realPath);
                 progress.dismiss();
 
             } catch (Exception e) {
-                //response = e.getMessage();
+                response = e.getMessage();
                 progress.dismiss();
             }
             return null;
@@ -219,13 +225,14 @@ public class MealMain extends Fragment {
         }
     }
 
-
     public String postImage(String filepath) throws Exception {
         String UPLOAD_SERVER = "http://210.146.64.139:8080/MealRecorder/save_file";
         HttpURLConnection connection;
         DataOutputStream outputStream;
         InputStream inputStream;
-        String boundary = "*****" + Long.toString(System.currentTimeMillis()) + "*****";
+        //int patientID=00001;
+        String dashes ="-----------------------------";
+        String boundary = Long.toString(System.currentTimeMillis());
         int bytesRead, bytesAvailable, bufferSize;
         byte[] buffer;
         String[] q = filepath.split("/");
@@ -241,12 +248,12 @@ public class MealMain extends Fragment {
         connection.setRequestMethod("POST");
         connection.setRequestProperty("Connection", "Keep-Alive");
         connection.setRequestProperty("User-Agent", "Android Multipart HTTP Client 1.0");
-        connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+        connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" +dashes+ boundary);
         outputStream = new DataOutputStream(connection.getOutputStream());
-        outputStream.writeBytes("--" + boundary + "\r\n");
+        outputStream.writeBytes("--"+dashes + boundary + "\r\n");
         outputStream.writeBytes("Content-Disposition: form-data; name=\"" + "imageFile" + "\"; filename=\"" + q[idx] + "\"" + "\r\n");
         outputStream.writeBytes("Content-Type: image/jpeg" + "\r\n");
-        outputStream.writeBytes("Content-Transfer-Encoding: binary" + "\r\n");
+        //outputStream.writeBytes("Content-Transfer-Encoding: binary" + "\r\n");
         outputStream.writeBytes("\r\n");
         bytesAvailable = fileInputStream.available();
         bufferSize = Math.min(bytesAvailable, 1048576);
@@ -259,7 +266,41 @@ public class MealMain extends Fragment {
             bytesRead = fileInputStream.read(buffer, 0, bufferSize);
         }
         outputStream.writeBytes("\r\n");
-        outputStream.writeBytes("--" + boundary + "--" + "\r\n");
+        outputStream.writeBytes(   "--"+dashes+boundary + "\r\n");
+       // outputStream.writeBytes("patientID="+String.valueOf(patientID));
+
+
+        //Map<String, String> params = new HashMap<>(2);
+        //params.put("patientID", "00002");
+       // params.put("bar", caption);
+        JSONObject parameters = new JSONObject();
+        parameters.put("patientID", "00090");
+
+       // Iterator<String> keys = params.keySet().iterator();
+       /* while (keys.hasNext()) {
+            String key = keys.next();
+            String value = params.get(key);
+
+            outputStream.writeBytes(boundary + "--" + boundary + "--" + "\r\n");
+            outputStream.writeBytes("Content-Disposition: form-data; name=\"" + key + "\"" + "--" + boundary + "--" + "\r\n");
+            outputStream.writeBytes("--" + boundary + "--" + "\r\n");
+            outputStream.writeBytes(value);
+            outputStream.writeBytes("--" + boundary + "--" + "\r\n");
+        }*/
+        Iterator<String> keys = parameters.keys();
+
+        while(keys.hasNext()) {
+            String key = keys.next();
+            String value = (String) parameters.get(key);
+//            if (parameters.get(key) instanceof JSONObject) {
+                outputStream.writeBytes("Content-Disposition: form-data; name=\"" + key + "\"" + "\r\n");
+                outputStream.writeBytes("\r\n"+value);
+                outputStream.writeBytes("\r\n"+"--"+dashes + boundary + "--" + "\r\n");
+//            }
+        }
+
+
+
         inputStream = connection.getInputStream();
         int status = connection.getResponseCode();
         if (status == HttpURLConnection.HTTP_OK) {

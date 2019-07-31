@@ -54,13 +54,13 @@ public class ConditionStatement extends Fragment {
         //set an adapter for our listView
         mealsListView.setAdapter(mealsLVAdapter);
 
-        mealsListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        mealsListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         mealsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 //set the navigator's visibility to true
                 next.setVisibility(View.VISIBLE);
-                previous.setVisibility(View.VISIBLE);
+               // previous.setVisibility(View.VISIBLE);
                 String item = (String) adapterView.getItemAtPosition(position);
                 mealsLVAdapter.notifyDataSetChanged();
                 //Log.i(TAG, "" + item);
@@ -86,6 +86,7 @@ public class ConditionStatement extends Fragment {
                 getFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container, new QuestionsA())
+                        .addToBackStack(null)
                         .commit();
             }
         });

@@ -60,7 +60,7 @@ public class QuestionsA extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 //set the navigator's visibility to true
                 nextLabel.setVisibility(View.VISIBLE);
-                prevLabel.setVisibility(View.VISIBLE);
+                //prevLabel.setVisibility(View.VISIBLE);
                 String item = (String) adapterView.getItemAtPosition(position);
                 questionsLVAdapter.notifyDataSetChanged();
                 //Log.i(TAG, "" + item);
@@ -84,6 +84,7 @@ public class QuestionsA extends Fragment {
                 getFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container, new MealQuantityVAS())
+                        .addToBackStack(null)
                         .commit();
             }
         });
@@ -92,6 +93,7 @@ public class QuestionsA extends Fragment {
             public void onClick(View view) {
                 getFragmentManager()
                         .beginTransaction()
+                        .addToBackStack(null)
                         .replace(R.id.fragment_container, new ConditionStatement())
                         .commit();
             }

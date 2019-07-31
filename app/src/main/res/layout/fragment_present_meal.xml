@@ -28,7 +28,8 @@
         android:text="@string/submit"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/add_photo"

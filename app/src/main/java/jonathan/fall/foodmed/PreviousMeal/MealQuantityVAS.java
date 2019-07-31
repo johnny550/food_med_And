@@ -1,5 +1,7 @@
 package jonathan.fall.foodmed.PreviousMeal;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,7 +18,7 @@ import jonathan.fall.foodmed.R;
 public class MealQuantityVAS extends Fragment {
     //get the VAS
     private ImageView mood_VSatisfied, mood_satisfied, mood_neutral, mood_dissatisfied, mood_VDissatisfied;
-    private TextView nextLabel;
+    private TextView nextLabel, valSlider;
 
     @Nullable
     @Override
@@ -27,6 +29,7 @@ public class MealQuantityVAS extends Fragment {
         SeekBar mySeekBar = v.findViewById(R.id.qt_eaten);
 
         nextLabel = (TextView) v.findViewById(R.id.next);
+        valSlider = (TextView) v.findViewById(R.id.ValueOfSlider);
 
         //VAS settings
         mood_VSatisfied = (ImageView) v.findViewById(R.id.ate_all);
@@ -40,6 +43,7 @@ public class MealQuantityVAS extends Fragment {
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 switch (i) {
                     case 0:
+                        valSlider.setText(R.string.zero_consumed);
                         mood_VDissatisfied.setVisibility(View.VISIBLE);
                         mood_dissatisfied.setVisibility(View.GONE);
                         mood_neutral.setVisibility(View.GONE);
@@ -47,6 +51,7 @@ public class MealQuantityVAS extends Fragment {
                         mood_VSatisfied.setVisibility(View.GONE);
                         break;
                     case 1:
+                        valSlider.setText(R.string.one_consumed);
                         mood_dissatisfied.setVisibility(View.VISIBLE);
                         mood_VDissatisfied.setVisibility(View.GONE);
                         mood_neutral.setVisibility(View.GONE);
@@ -54,6 +59,7 @@ public class MealQuantityVAS extends Fragment {
                         mood_VSatisfied.setVisibility(View.GONE);
                         break;
                     case 2:
+                        valSlider.setText(R.string.two_consumed);
                         mood_neutral.setVisibility(View.VISIBLE);
                         mood_dissatisfied.setVisibility(View.GONE);
                         mood_VDissatisfied.setVisibility(View.GONE);
@@ -61,6 +67,7 @@ public class MealQuantityVAS extends Fragment {
                         mood_VSatisfied.setVisibility(View.GONE);
                         break;
                     case 3:
+                        valSlider.setText(R.string.three_consumed);
                         mood_satisfied.setVisibility(View.VISIBLE);
                         mood_neutral.setVisibility(View.GONE);
                         mood_dissatisfied.setVisibility(View.GONE);
@@ -68,6 +75,7 @@ public class MealQuantityVAS extends Fragment {
                         mood_VSatisfied.setVisibility(View.GONE);
                         break;
                     case 4:
+                        valSlider.setText(R.string.four_consumed);
                         mood_VSatisfied.setVisibility(View.VISIBLE);
                         mood_neutral.setVisibility(View.GONE);
                         mood_dissatisfied.setVisibility(View.GONE);
@@ -95,9 +103,44 @@ public class MealQuantityVAS extends Fragment {
                 getFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container, new QuestionsA())
+                        .addToBackStack(null)
                         .commit();
             }
         });
         return v;
     }
+
+    public void onBackPressed(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        builder.setTitle("Please confirm");
+        builder.setMessage("Are you willing to exit the app?");
+        builder.setCancelable(true);
+
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // Do something when user want to exit the app
+                // Let allow the system to handle the event, such as exit the app
+                //MainActivity.super.onBackPressed();
+                getActivity().finish();
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // Do something when want to stay in the app
+                //Toast.makeText(mContext,"thank you",Toast.LENGTH_LONG).show();
+            }
+        });
+
+        // Create the alert dialog using alert dialog builder
+        AlertDialog dialog = builder.create();
+
+        // Finally, display the dialog when user press back button
+        dialog.show();
+    }
+
+
 }
