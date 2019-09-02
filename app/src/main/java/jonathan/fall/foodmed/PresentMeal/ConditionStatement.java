@@ -1,9 +1,12 @@
 package jonathan.fall.foodmed.PresentMeal;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -22,18 +26,21 @@ import jonathan.fall.foodmed.R;
 
 public class ConditionStatement extends Fragment {
 
-    private ImageView notHungry0, notHungry, normal,hungry, ravenous;
+    private ImageView notHungry0, notHungry, normal, hungry, ravenous;
     private ImageView notGood0, notGood, okay, well, great;
     private TextView next, previous;
     private String mealsList[];
     private ArrayList<String> checkedItems = new ArrayList<>();
     private ListView mealsListView;
 
+    private int valAppetite, valCondition;
+
+    public static final String SHARED_PREF = "shPrefs";
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_conditions_for_present_meal, container, false);
-
         //Link the textView variables to ours on the layout
         next = (TextView) v.findViewById(R.id.Next);
         previous = (TextView) v.findViewById(R.id.Prev);
@@ -47,7 +54,7 @@ public class ConditionStatement extends Fragment {
         //The listView's adapter
         final ArrayAdapter<String> mealsLVAdapter = new ArrayAdapter<String>(
                 getActivity(),
-                android.R.layout.select_dialog_multichoice,
+                android.R.layout.simple_list_item_single_choice,
                 mealsList
         );
 
@@ -60,7 +67,7 @@ public class ConditionStatement extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 //set the navigator's visibility to true
                 next.setVisibility(View.VISIBLE);
-               // previous.setVisibility(View.VISIBLE);
+                // previous.setVisibility(View.VISIBLE);
                 String item = (String) adapterView.getItemAtPosition(position);
                 mealsLVAdapter.notifyDataSetChanged();
                 //Log.i(TAG, "" + item);
@@ -70,6 +77,7 @@ public class ConditionStatement extends Fragment {
                         System.out.println("-------------------------------------------------------is checked: "+num);
                     }*/
                 } else {
+                    checkedItems.clear();
                     checkedItems.add(item);
 /*                    for (String num : checkedItems) {
                         System.out.println("-------------------------------------------------------is checked: "+num);
@@ -83,6 +91,7 @@ public class ConditionStatement extends Fragment {
         previous.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                deletePreviousQuestions();
                 getFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container, new QuestionsA())
@@ -93,6 +102,7 @@ public class ConditionStatement extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                saveMultipleData();
                 getFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container, new MealMain())
@@ -122,8 +132,9 @@ public class ConditionStatement extends Fragment {
         userAppetite.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                switch (i){
+                switch (i) {
                     case 0:
+                        valAppetite = 0;
                         notHungry0.setVisibility(View.VISIBLE);
                         notHungry.setVisibility(View.GONE);
                         normal.setVisibility(View.GONE);
@@ -131,6 +142,7 @@ public class ConditionStatement extends Fragment {
                         ravenous.setVisibility(View.GONE);
                         break;
                     case 1:
+                        valAppetite = 25;
                         notHungry.setVisibility(View.VISIBLE);
                         notHungry0.setVisibility(View.GONE);
                         normal.setVisibility(View.GONE);
@@ -138,6 +150,7 @@ public class ConditionStatement extends Fragment {
                         ravenous.setVisibility(View.GONE);
                         break;
                     case 2:
+                        valAppetite = 50;
                         normal.setVisibility(View.VISIBLE);
                         notHungry0.setVisibility(View.GONE);
                         notHungry.setVisibility(View.GONE);
@@ -145,6 +158,7 @@ public class ConditionStatement extends Fragment {
                         ravenous.setVisibility(View.GONE);
                         break;
                     case 3:
+                        valAppetite = 75;
                         hungry.setVisibility(View.VISIBLE);
                         notHungry0.setVisibility(View.GONE);
                         notHungry.setVisibility(View.GONE);
@@ -152,6 +166,7 @@ public class ConditionStatement extends Fragment {
                         ravenous.setVisibility(View.GONE);
                         break;
                     case 4:
+                        valAppetite = 100;
                         ravenous.setVisibility(View.VISIBLE);
                         notHungry0.setVisibility(View.GONE);
                         notHungry.setVisibility(View.GONE);
@@ -176,8 +191,9 @@ public class ConditionStatement extends Fragment {
         userCondition.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                switch (i){
+                switch (i) {
                     case 0:
+                        valCondition = 0;
                         notGood0.setVisibility(View.VISIBLE);
                         notGood.setVisibility(View.GONE);
                         okay.setVisibility(View.GONE);
@@ -185,6 +201,7 @@ public class ConditionStatement extends Fragment {
                         great.setVisibility(View.GONE);
                         break;
                     case 1:
+                        valCondition = 25;
                         notGood.setVisibility(View.VISIBLE);
                         notGood0.setVisibility(View.GONE);
                         okay.setVisibility(View.GONE);
@@ -192,6 +209,7 @@ public class ConditionStatement extends Fragment {
                         great.setVisibility(View.GONE);
                         break;
                     case 2:
+                        valCondition = 50;
                         okay.setVisibility(View.VISIBLE);
                         notGood.setVisibility(View.GONE);
                         notGood0.setVisibility(View.GONE);
@@ -199,6 +217,7 @@ public class ConditionStatement extends Fragment {
                         great.setVisibility(View.GONE);
                         break;
                     case 3:
+                        valCondition = 75;
                         well.setVisibility(View.VISIBLE);
                         notGood.setVisibility(View.GONE);
                         okay.setVisibility(View.GONE);
@@ -206,6 +225,7 @@ public class ConditionStatement extends Fragment {
                         great.setVisibility(View.GONE);
                         break;
                     case 4:
+                        valCondition = 100;
                         great.setVisibility(View.VISIBLE);
                         notGood.setVisibility(View.GONE);
                         okay.setVisibility(View.GONE);
@@ -228,4 +248,31 @@ public class ConditionStatement extends Fragment {
 
         return v;
     }
+
+    public void saveMultipleData() {
+        SharedPreferences sharedPref = getActivity().getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        //Meals first
+        for (String meal : checkedItems) {
+            editor.putBoolean(meal, true);
+        }
+        //Then the appetite and conditions
+        editor.putFloat("Appetite", valAppetite);
+        editor.putFloat("Condition", valCondition);
+
+        editor.commit();
+    }
+
+    public void deletePreviousQuestions() {
+        SharedPreferences sharedPref = getActivity().getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE);
+        String questionsList[] = getResources().getStringArray(R.array.first_questions_block);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        for (String item : questionsList) {
+            // if(sharedPref.getString(item,"")){
+            editor.putBoolean(item, false);
+            //}
+        }
+        editor.commit();
+    }
+
 }

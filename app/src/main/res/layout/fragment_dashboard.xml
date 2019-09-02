@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginLeft="50sp"
+        android:layout_marginTop="20sp"
+        app:srcCompat="@drawable/ic_add" />
+
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/lab"
         android:layout_width="match_parent"
-        android:layout_height="179dp"
-        android:text="dash"
-        android:textSize="23sp" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40sp"
+        android:text="@string/noData"
+        android:textSize="20sp" />
+
+    <ListView
+        android:id="@+id/dbContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+
+    </ListView>
 </LinearLayout>

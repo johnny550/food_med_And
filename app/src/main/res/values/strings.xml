@@ -2,17 +2,25 @@
     <string name="app_name">FoodMed</string>
 
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
+    <string name="prompt_email">Patient ID</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign</string>
+    <string name="action_sign_in">Sign in</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_patientID">This patient id is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="patientID">Patient ID: </string>
+    <string name="userImageDescription">user photo description</string>
+    <string name="userEmail">Email@domain</string>
+    <string name="noData">No recent data</string>
+    <string name="url">Url</string>
+    <string name="done">Done</string>
+    <string name="pId">Patient ID</string>
+    <string name="logout">Sign out</string>
     <string name="post_meal_condition">Please specify how you felt after your previous meal by selecting one or more options below</string>
     <string name="navigation_drawer_open">Open Navigation drawer</string>
     <string name="navigation_drawer_close">Close Navigation drawer</string>

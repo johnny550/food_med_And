@@ -1,5 +1,7 @@
 package jonathan.fall.foodmed.PreviousMeal;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +36,8 @@ public class QuestionsA extends Fragment {
     private ListView blockA;
     private View view;
     private ListView questionsListView;
+
+    public static final String SHARED_PREF= "shPrefs";
 
     @Nullable
     @Override
@@ -81,6 +86,7 @@ public class QuestionsA extends Fragment {
         prevLabel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                deletePreviousRecording();
                 getFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container, new MealQuantityVAS())
@@ -91,6 +97,8 @@ public class QuestionsA extends Fragment {
         nextLabel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                spReinitialization();
+                saveQuestions();
                 getFragmentManager()
                         .beginTransaction()
                         .addToBackStack(null)
@@ -101,6 +109,35 @@ public class QuestionsA extends Fragment {
 
 
         return view;
+    }
+
+    public void spReinitialization() {
+        SharedPreferences sharedPref = getActivity().getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        //the questions
+        String fullQuestionsList[] = getResources().getStringArray(R.array.first_questions_block);
+        for (String question : fullQuestionsList) {
+            editor.putBoolean(question, false);
+        }
+
+        //the meal quantity, condition and appetite...--not needed because they take a single value
+        editor.commit();
+    }
+
+    public void saveQuestions(){
+        SharedPreferences sharedPref = getActivity().getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        for(String question :checkedItems){
+            editor.putBoolean(question, true);
+        }
+        editor.commit();
+    }
+    public void deletePreviousRecording(){
+        SharedPreferences sharedPref = getActivity().getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("volume_meal", "0");
+        editor.commit();
     }
 
 /*    @Override

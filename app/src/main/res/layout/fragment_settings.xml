@@ -2,14 +2,36 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_blue_light"
-    >
-    
+    android:background="#e0eef2">
+
     <TextView
+        android:id="@+id/validate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="settings fragment"
-        android:textSize="30sp"
-        android:layout_centerInParent="true"/>
+        android:layout_marginLeft="300sp"
+        android:layout_marginTop="5sp"
+        android:text="@string/done"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
+    <EditText
+        android:id="@+id/url"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40sp"
+        android:layout_marginTop="60sp"
+        android:ems="10"
+        android:hint="@string/url"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/pid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40sp"
+        android:layout_marginTop="150sp"
+        android:ems="10"
+        android:hint="@string/pId"
+        android:inputType="textPersonName" />
 </RelativeLayout>

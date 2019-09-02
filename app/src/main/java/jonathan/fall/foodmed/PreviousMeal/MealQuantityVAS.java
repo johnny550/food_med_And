@@ -1,7 +1,9 @@
 package jonathan.fall.foodmed.PreviousMeal;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,6 +21,8 @@ public class MealQuantityVAS extends Fragment {
     //get the VAS
     private ImageView mood_VSatisfied, mood_satisfied, mood_neutral, mood_dissatisfied, mood_VDissatisfied;
     private TextView nextLabel, valSlider;
+
+    public static final String SHARED_PREF= "shPrefs";
 
     @Nullable
     @Override
@@ -100,6 +104,7 @@ public class MealQuantityVAS extends Fragment {
         nextLabel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                saveMealQuantity();
                 getFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container, new QuestionsA())
@@ -110,7 +115,14 @@ public class MealQuantityVAS extends Fragment {
         return v;
     }
 
-    public void onBackPressed(){
+    public void saveMealQuantity() {
+        SharedPreferences sharedPref = getActivity().getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("volume_meal", valSlider.getText().toString().replace("%",""));
+        editor.commit();
+    }
+
+    public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setTitle("Please confirm");

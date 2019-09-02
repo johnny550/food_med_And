@@ -9,18 +9,22 @@
     android:background="@color/colorAccent">
 
     <ImageView
+        android:id="@+id/photo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="8dp"
-        android:text="Email@domain"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+        android:contentDescription="@string/userImageDescription"
+        android:src="@mipmap/ic_launcher" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="info@coding.com"/>
+        android:paddingTop="8dp"
+        android:text="@string/userEmail"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+    <TextView
+        android:id="@+id/pID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/patientID" />
 </LinearLayout>
